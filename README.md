@@ -342,3 +342,44 @@ CREATE TABLE Communication_Types (
     type_name VARCHAR(50) UNIQUE NOT NULL
 );
 ```
+### Backend Development
+
+#### User Management Service
+
+- Create APIs for:
+  - User registration and login.
+  - JWT-based authentication.
+  - Role management (assigning roles like agent or customer).
+- Sequence Diagram
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+    participant UsersDB as Users
+    participant RolesDB as Roles
+    participant UserRoleDB as UserRole
+    participant JWTService as "JWT Service"
+
+    User->>System: Provide LoginDto
+    System->>UsersDB: Query user by email
+    UsersDB-->>System: Return user details
+    
+    alt If user found
+        System->>System: Validate password (compare with password_hash)
+        
+        alt If password valid
+            System->>UserRoleDB: Query user roles based on user_id
+            UserRoleDB-->>System: Return user roles (role_id)
+            System->>RolesDB: Query role details based on role_id
+            RolesDB-->>System: Return role details (role_name)
+            System->>JWTService: Generate JWT token for user
+            JWTService-->>System: Return JWT token
+            System->>User: Return JWT token for access
+        else If password invalid
+            System->>User: Display login failure message
+        end
+    else If user not found
+        System->>User: Display login failure message
+    end
+
+```
