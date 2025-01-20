@@ -33,7 +33,7 @@
 ```mermaid
 erDiagram
     Users {
-        INT id PK
+        CHAR(36) id PK
         VARCHAR name
         VARCHAR email
         VARCHAR password_hash
@@ -46,89 +46,89 @@ erDiagram
     }
 
     Roles {
-        INT role_id PK
+        CHAR(36) role_id PK
         VARCHAR role_name
     }
 
     UserRole {
-        INT user_id PK
-        INT role_id PK
+        CHAR(36) user_id PK
+        CHAR(36) role_id PK
         TIMESTAMP asigned_at
     }
 
     Customers {
-        INT customer_id PK
-        INT user_id
+        CHAR(36) customer_id PK
+        CHAR(36) user_id
         INT loyalty_points
-        INT type_id
+        CHAR(36) type_id
     }
 
     CustomerTypes {
-        INT type_id PK
+        CHAR(36) type_id PK
         VARCHAR type_name
     }
 
     Agents {
-        INT agent_id PK
-        INT user_id
+        CHAR(36) agent_id PK
+        CHAR(36) user_id
     }
 
     AgentRole {
-        INT agent_id PK
-        INT role_id PK
+        CHAR(36) agent_id PK
+        CHAR(36) role_id PK
         TIMESTAMP asigned_at
     }
 
     Departments {
-        INT department_id PK
+        CHAR(36) department_id PK
         VARCHAR department_name
     }
 
     AgentDepartment {
-        INT agent_id PK
-        INT department_id PK
+        CHAR(36) agent_id PK
+        CHAR(36) department_id PK
         TIMESTAMP asigned_at
     }
 
     Tickets {
-        INT ticket_id PK
-        INT customer_id
+        CHAR(36) ticket_id PK
+        CHAR(36) customer_id
         VARCHAR subject
         TEXT description
-        INT status_id
-        INT priority_id
+        CHAR(36) status_id
+        CHAR(36) priority_id
         TIMESTAMP created_at
         TIMESTAMP updated_at
     }
 
     Ticket_Statuses {
-        INT status_id PK
+        CHAR(36) status_id PK
         VARCHAR status_name
     }
 
     Ticket_Priorities {
-        INT priority_id PK
+        CHAR(36) priority_id PK
         VARCHAR priority_name
     }
 
     Ticket_Assignments {
-        INT assignment_id PK
-        INT ticket_id
-        INT agent_id
+        CHAR(36) assignment_id PK
+        CHAR(36) ticket_id
+        CHAR(36) agent_id
         TIMESTAMP assigned_at
     }
 
     Communication_Logs {
-        INT log_id PK
-        INT ticket_id
-        INT agent_id
+        CHAR(36) log_id PK
+        CHAR(36) ticket_id
+        CHAR(36) agent_id
         TEXT message
-        INT type_id
+        CHAR(36) type_id
         TIMESTAMP created_at
     }
 
     Communication_Types {
-        INT type_id PK
+        CHAR(36) type_id PK
         VARCHAR type_name
     }
 
@@ -158,7 +158,7 @@ erDiagram
 
 ```sql
 CREATE TABLE Users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id CHAR(36) PRIMARY KEY
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -175,7 +175,7 @@ CREATE TABLE Users (
 
 ```sql
 CREATE TABLE Roles (
-  role_id INT AUTO_INCREMENT PRIMARY KEY,
+  role_id CHAR(36) PRIMARY KEY
   role_name VARCHAR(50) UNIQUE NOT NULL
 );
 
@@ -196,7 +196,7 @@ CREATE TABLE UserRole (
 
 ```sql
 CREATE TABLE Customers (
-    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id CHAR(36) PRIMARY KEY
     user_id INT NOT NULL,
     loyalty_points INT DEFAULT 0,
     type_id INT NOT NULL,
@@ -210,7 +210,7 @@ CREATE TABLE Customers (
 
 ```sql
 CREATE TABLE CustomerTypes (
-    type_id INT AUTO_INCREMENT PRIMARY KEY,
+    type_id CHAR(36) PRIMARY KEY
     type_name VARCHAR(50) UNIQUE NOT NULL
 );
 ```
@@ -219,7 +219,7 @@ CREATE TABLE CustomerTypes (
 
 ```sql
 CREATE TABLE Agents (
-    agent_id INT AUTO_INCREMENT PRIMARY KEY,
+    agent_id CHAR(36) PRIMARY KEY
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (role_id) REFERENCES Roles(role_id),
@@ -230,7 +230,7 @@ CREATE TABLE Agents (
 - Agent Roles table
 ```sql
 CREATE TABLE Roles (
-  role_id INT AUTO_INCREMENT PRIMARY KEY,
+  role_id CHAR(36) PRIMARY KEY
   role_name VARCHAR(50) UNIQUE NOT NULL
 );
 ```
@@ -250,7 +250,7 @@ CREATE TABLE AgentRole (
 
 ```sql
 CREATE TABLE Departments (
-    department_id INT AUTO_INCREMENT PRIMARY KEY,
+    department_id CHAR(36) PRIMARY KEY
     department_name VARCHAR(255) NOT NULL UNIQUE
 );
 
@@ -272,7 +272,7 @@ CREATE TABLE AgentDepartment (
 
 ```sql
 CREATE TABLE Tickets (
-    ticket_id INT AUTO_INCREMENT PRIMARY KEY,
+    ticket_id CHAR(36) PRIMARY KEY
     customer_id INT NOT NULL,
     subject VARCHAR(255) NOT NULL,
     description TEXT,
@@ -291,7 +291,7 @@ CREATE TABLE Tickets (
 
 ```sql
 CREATE TABLE Ticket_Statuses (
-    status_id INT AUTO_INCREMENT PRIMARY KEY,
+    status_id CHAR(36) PRIMARY KEY
     status_name VARCHAR(50) UNIQUE NOT NULL
 );
 ```
@@ -300,7 +300,7 @@ CREATE TABLE Ticket_Statuses (
 
 ```sql
 CREATE TABLE Ticket_Priorities (
-    priority_id INT AUTO_INCREMENT PRIMARY KEY,
+    priority_id CHAR(36) PRIMARY KEY
     priority_name VARCHAR(50) UNIQUE NOT NULL
 );
 ```
@@ -309,7 +309,7 @@ CREATE TABLE Ticket_Priorities (
 
 ```sql
 CREATE TABLE Ticket_Assignments (
-    assignment_id INT AUTO_INCREMENT PRIMARY KEY,
+    assignment_id CHAR(36) PRIMARY KEY
     ticket_id INT NOT NULL,
     agent_id INT NOT NULL,
     assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -322,7 +322,7 @@ CREATE TABLE Ticket_Assignments (
 
 ```sql
 CREATE TABLE Communication_Logs (
-    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    log_id CHAR(36) PRIMARY KEY
     ticket_id INT NOT NULL,
     agent_id INT,
     message TEXT NOT NULL,
@@ -338,7 +338,7 @@ CREATE TABLE Communication_Logs (
 
 ```sql
 CREATE TABLE Communication_Types (
-    type_id INT AUTO_INCREMENT PRIMARY KEY,
+    type_id CHAR(36) PRIMARY KEY
     type_name VARCHAR(50) UNIQUE NOT NULL
 );
 ```
