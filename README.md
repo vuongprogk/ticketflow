@@ -157,17 +157,17 @@ erDiagram
 - User table
 
 ```sql
-CREATE TABLE Users (
-    id CHAR(36) PRIMARY KEY
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    phone VARCHAR(20),
-    address TEXT,
-    is_active BOOLEAN DEFAULT TRUE,
-    last_login TIMESTAMP,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP
+CREATE TABLE Users
+(
+    Id UNIQUEIDENTIFIER PRIMARY KEY,        -- User's Id (GUID)
+    Name NVARCHAR(255) NOT NULL,            -- User's Name (string, max length of 255 characters)
+    Email NVARCHAR(255) NOT NULL,           -- User's Email (string, max length of 255 characters)
+    Phone NVARCHAR(50) NULL,                -- User's Phone (string, max length of 50 characters)
+    Address NVARCHAR(500) NULL,             -- User's Address (string, max length of 500 characters)
+    IsActive BIT NOT NULL,                  -- User's Active status (boolean)
+    LastLogin DATETIME NULL,                -- Last login date (DateTime)
+    CreatedAt DATETIME NOT NULL DEFAULT GETDATE(), -- Created date (DateTime, defaults to current date)
+    UpdatedAt DATETIME NOT NULL DEFAULT GETDATE()  -- Updated date (DateTime, defaults to current date)
 );
 ```
 
