@@ -1,4 +1,5 @@
 using System.Text;
+using Application.Features.Mapper;
 using Application.Interfaces;
 using Application.Services;
 using Domain.Interfaces;
@@ -36,6 +37,7 @@ builder.Services.AddAuthentication(option =>
         RoleClaimType = SD.RoleName
     };
 });
+builder.Services.AddAutoMapper(typeof(UserMapper).Assembly);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
