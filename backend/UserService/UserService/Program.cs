@@ -38,6 +38,13 @@ builder.Services.AddAuthentication(option =>
     };
 });
 builder.Services.AddAutoMapper(typeof(UserMapper).Assembly);
+builder.Services.AddStackExchangeRedisCache(option =>{
+    option.Configuration = "localhost";
+    option.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions(){
+        AbortOnConnectFail = true,
+        EndPoints = {option.Configuration}
+    };
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
